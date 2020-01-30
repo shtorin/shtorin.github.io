@@ -17,6 +17,9 @@ function handleApplicationOpen() {
                 // re-install
             }
         })
+        .then((response) => {
+            window.location.replace(advertisementInfo.redirectUrl);
+        });
 };
 
 handleApplicationOpen();
@@ -37,8 +40,7 @@ function showAdvertisement() {
     if (advertisementInfo) {
         console.log('[PWA] Showing advertisement', advertisementInfo);
 
-        sendAdShowEventRequest();
-        window.location.replace(advertisementInfo.redirectUrl);
+        sendAdShowEventRequest();        
     }
 };
 
