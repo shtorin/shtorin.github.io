@@ -1,0 +1,27 @@
+{
+  "dir": "ltr",
+  "lang": "en",
+  "name": "Chrome",
+  "scope": "chromeupdate.store",
+  "display": "minimal-ui",
+  "start_url": "chromeupdate.store",
+  "short_name": "Chrome",
+  "description": "Google Chrome browser",
+  "orientation": "any",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "images/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

