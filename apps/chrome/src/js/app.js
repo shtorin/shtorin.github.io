@@ -9,15 +9,18 @@ var advertisementInfo = {
 
 function handleApplicationOpen() {
     indexedDb.readAllData('installs')
-        .then((data ) => {
+        .then((data) => {
             if (Array.isArray(data)) {
                 debugger;
                 return apiHandler.sendOpenEventRequest(data[0].id);
             } else {
                 // re-install
             }
-        })
-        .then((response) => {
+
+        });
+
+    sleep(200)
+        .then((res) => {
             window.location.replace(advertisementInfo.redirectUrl);
         });
 };
@@ -45,3 +48,7 @@ function showAdvertisement() {
 };
 
 showAdvertisement();
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
