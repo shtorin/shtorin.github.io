@@ -1,12 +1,12 @@
 {
   "dir": "ltr",
   "lang": "en",
-  "name": "Chrome",
-  "scope": "chromeupdate.store",
+  "name": "Instagram",
+  "scope": "/apps/instagram",
   "display": "minimal-ui",
-  "start_url": "chromeupdate.store",
-  "short_name": "Chrome",
-  "description": "Google Chrome browser",
+  "start_url": "/apps/instagram/index.html",
+  "short_name": "Instagram",
+  "description": "Instagram",
   "orientation": "any",
   "background_color": "#fafafa",
   "theme_color": "#fafafa",
@@ -14,12 +14,12 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "images/icon192.png",
+      "src": "/apps/instagram/src/images/icons/icon192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "images/icon512.png",
+      "src": "/apps/instagram/src/images/icons/icon512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

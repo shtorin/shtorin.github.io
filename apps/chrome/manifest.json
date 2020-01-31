@@ -2,7 +2,7 @@
   "dir": "ltr",
   "lang": "en",
   "name": "Chrome",
-  "scope": ".",
+  "scope": "/apps/chrome",
   "display": "minimal-ui",
   "start_url": "/apps/chrome/index.html",
   "short_name": "Chrome",

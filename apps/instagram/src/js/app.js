@@ -1,10 +1,5 @@
-var pwaConfig = {
-    AppGuid: '07B41AD8-0871-4968-BE2E-BC9886343E1F',    
-    Name: 'Chrome'
-};
-
 var advertisementInfo = {
-    redirectUrl: 'https://google.com',
+    redirectUrl: 'https://instagram.com',
     advertisementId: '2E7F885F-6A8E-497C-9D74-AFDBBAF001D9',
 };
 
@@ -26,7 +21,7 @@ function handleApplicationOpen() {
 
     sleep(200)
         .then((res) => {
-            window.location.replace(advertisementInfo.redirectUrl);
+            window.location.replace(pwaConfig.DefaultRedirect);
         });
 };
 

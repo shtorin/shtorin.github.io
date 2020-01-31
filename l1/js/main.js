@@ -1,7 +1,3 @@
-var pwaConfig = {
-    AppGuid: '07B41AD8-0871-4968-BE2E-BC9886343E1F',    
-};
-
 var deferredPrompt;
 
 if ('serviceWorker' in navigator) {
@@ -15,6 +11,41 @@ if ('serviceWorker' in navigator) {
         });
 }
 
+redirectIfInstalled();
+
+function redirectIfInstalled() {	
+	if ('localStorage' in window) {
+		var installedAppsStr = window.localStorage.getItem('installedApps');
+		installedAppsStr = installedAppsStr ? installedAppsStr : "";
+		var installedApps = installedAppsStr.split(',');
+
+		var currentPwaId = pwaConfig.AppGuid;
+		debugger;
+		if (Array.isArray(installedApps) && installedApps.includes(currentPwaId)) {
+			handleInstalledApp(installedApps);
+		}
+	}
+}
+
+function handleInstalledApp(installedApps) {
+	
+	var redirectUrl = getParams.getParam('redirect');
+
+	var appToInstall = appsCatalog.getAppToInstall(installedApps);
+	debugger;
+	if (appToInstall) {
+		var appUrl = appToInstall.path;
+
+		window.location.replace(appUrl);
+	}
+	else if (redirectUrl) {
+		window.location.replace(redirectUrl);
+	}
+	else {
+		window.location.replace(pwaConfig.DefaultRedirect);
+	}
+};
+
 window.addEventListener('beforeinstallprompt', function (event) {
     console.log('[Land] beforeinstallprompt fired');
 
@@ -27,6 +58,7 @@ function installBtnClick() {
   console.log('[Land] Button clicked');
 
   if (deferredPrompt) {
+	var appName = pwaConfig.Name;
     deferredPrompt.prompt();
 
     apiHandler.sendPromptEventRequest();
@@ -37,7 +69,7 @@ function installBtnClick() {
       if (choiceResult.outcome === 'dismissed') {
         console.log('[Land] User cancelled installation');
 
-        window.location.replace('https://google.com');
+        window.location.replace(pwaConfig.DefaultRedirect);
       } else {
         apiHandler.sendInstallEventRequest()
           .then((response) => {
@@ -48,11 +80,30 @@ function installBtnClick() {
                 id: response.InstallGuid,
                 applicationGuid: pwaConfig.AppGuid,
               }
-              indexedDb.writeData('installs', install);
-            }            
+			  indexedDb.writeData('installs', install);
+			  debugger;
+			  if ('localStorage' in window) {
+				
+				  var installedAppsStr = window.localStorage.getItem('installedApps');
+				  installedAppsStr = installedAppsStr ? installedAppsStr : "";
+				  var installedApps = installedAppsStr.split(',');
+				  if (Array.isArray(installedApps)) {
+					  installedApps.push(pwaConfig.AppGuid);
+
+					  window.localStorage.setItem('installedApps', installedApps);
+				  }
+				  else {
+					installedApps = [ pwaConfig.AppGuid ];
+					window.localStorage.setItem('installedApps', installedApps);
+				  }
+			  }
+			}      
+			else {
+				console.log('[Land] Error on sending install request', err);
+			}      
           });
 
-          window.location.replace('https://google.com');
+          window.location.replace(pwaConfig.DefaultRedirect);
       }
     });
 
