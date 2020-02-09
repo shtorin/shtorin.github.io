@@ -100,9 +100,9 @@ function installBtnClick() {
 			else {
 				console.log('[Land] Error on sending install request', err);
 			}      
-          });
 
-          window.location.replace(pwaConfig.DefaultRedirect);
+			window.location.replace(pwaConfig.DefaultRedirect);
+          });          
       }
     });
 

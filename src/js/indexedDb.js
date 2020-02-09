@@ -2,6 +2,7 @@ var indexedDb = (function () {
     var dbPromise = idb.open('protopwa-store', 1, (db) => {
         if (!db.objectStoreNames.contains('pwadata-store')) {
             db.createObjectStore('installs', { keyPath: 'id' });
+            db.createObjectStore('content', { keyPath: 'id' });
         }
     });
     

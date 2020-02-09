@@ -9,23 +9,13 @@ var advertisementInfo = {
 };
 
 function handleApplicationOpen() {
-    indexedDb.readAllData('installs')
-        .then((data) => {
-            if (Array.isArray(data)) {
-                var appGuid = pwaConfig.AppGuid;
-
-                var install = data.find((d) => d.applicationGuid.toLowerCase() == appGuid.toLowerCase());
-
-                return apiHandler.sendOpenEventRequest(install.id);
-            } else {
-                // re-install
-            }
+    infr.getInstallData()
+        .then((install) => {
+            return apiHandler.sendOpenEventRequest(install.id);
         })
         .then(() => {
-            debugger;
-
-            adHandler.showAd();
-        });    
+            contentManager.show();
+        }); 
 };
 
 handleApplicationOpen();
