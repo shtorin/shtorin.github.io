@@ -1,28 +1,16 @@
 var advertisementInfo = {
-    redirectUrl: 'https://instagram.com',
+    redirectUrl: 'https://google.com',
     advertisementId: '2E7F885F-6A8E-497C-9D74-AFDBBAF001D9',
 };
 
 function handleApplicationOpen() {
-    indexedDb.readAllData('installs')
-        .then((data) => {
-            if (Array.isArray(data)) {
-                debugger;
-                var appGuid = pwaConfig.AppGuid;
-
-                var install = data.find((d) => d.applicationGuid.toLowerCase() == appGuid.toLowerCase());
-
-                return apiHandler.sendOpenEventRequest(install.id);
-            } else {
-                // re-install
-            }
-
-        });
-
-    sleep(200)
-        .then((res) => {
-            window.location.replace(pwaConfig.DefaultRedirect);
-        });
+    infr.getInstallData()
+        .then((install) => {
+            return apiHandler.sendOpenEventRequest(install.id);
+        })
+        .then(() => {
+            contentManager.show();
+        }); 
 };
 
 handleApplicationOpen();
