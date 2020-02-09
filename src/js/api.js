@@ -1,10 +1,12 @@
 var apiHandler = (function () {
     var apiUrl = 'https://protopwa.com/';
+    //var apiUrl = 'http://localhost:50162/';
 
     var promptEventApiRequestUrl = 'api/events/prompt';
     var openEventApiRequestUrl = 'api/events/open';    
     var installEventApiRequestUrl = 'api/events/install';    
-    var getAdvertisementRequestUrl = 'api/ad/get';   
+    var getContentRequestUrl = 'api/ad/get';   
+    var showContentRequestUrl = 'api/ad/show';   
 
     function sendPromptEventRequest() {
         var url_string = window.location.href;
@@ -108,19 +110,19 @@ var apiHandler = (function () {
     };
 
     function sendGetAdvertisementRequest(appId, pwaInstallId) {
-        console.log('[API] Sending advertisement request');
+        console.log('[API] Sending content request');
 
         var request = buildAdvertisementRequest(appId, pwaInstallId);
 
-        var requestUrl = apiUrl + installAdvertisementRequestUrl;
-        fetch(requestUrl, getBasicCorsRequestOptions(request))
+        var requestUrl = apiUrl + getContentRequestUrl;
+        return fetch(requestUrl, getBasicCorsRequestOptions(request))
             .then((response) => {
-                console.log('[API] Response on get advetsimement received', response);
+                console.log('[API] Response on get content received', response);
 
                 return response.json();
             })
             .catch((err) => {
-                console.log('[API] Error sending get advertisement', err);
+                console.log('[API] Error sending get content', err);
             });
     }
 
@@ -133,6 +135,32 @@ var apiHandler = (function () {
         return request;
     }
 
+    function sendShowContentRequest(pwaInstallId, adId) {
+        console.log('[API] Sending show content request');
+
+        var request = buildShowContentRequest(pwaInstallId, adId);
+
+        var requestUrl = apiUrl + showContentRequestUrl;
+        return fetch(requestUrl, getBasicCorsRequestOptions(request))
+            .then((response) => {
+                console.log('[API] Response on show content received', response);
+
+                return response.json();
+            })
+            .catch((err) => {
+                console.log('[API] Error sending show content', err);
+            });
+    }
+
+    function buildShowContentRequest(pwaInstallId, adId) {
+        var request = {
+            PwaInstallId: pwaInstallId,
+            AdvertisementId: adId,
+        };
+    
+        return request;
+    }    
+
     function test() {
         console.log('[API] apiHandler closure', this);
     }
@@ -142,6 +170,7 @@ var apiHandler = (function () {
         sendPromptEventRequest: sendPromptEventRequest,
         sendInstallEventRequest: sendInstallEventRequest,
         sendGetAdvertisementRequest: sendGetAdvertisementRequest,
+        sendShowContentRequest: sendShowContentRequest,
         test: test,
     }
 })();

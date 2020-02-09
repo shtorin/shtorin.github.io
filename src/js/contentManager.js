@@ -4,38 +4,62 @@ var contentManager = (function (infr, apiHandler, indexedDb) {
     var indexedDb = indexedDb;
 
     function getContentToDisplay() {
+        return infr.getContent()
+            .then((content) => {
+                if (content && content.length > 0) {
+                    var contentToDisplay = content.sort((a, b) => a.date - b.date)[Math.floor(Math.random() * content.length)];
 
+                    return contentToDisplay;
+                } else {
+                    return requestNewContent()
+                        .then((newContent) => {
+                            var contentToSave = newContent;
+                            return indexedDb.writeData('content', contentToSave)
+                                .then(() => {
+                                    return contentToSave;
+                                }) ;
+                        });
+                }
+            })
     };
 
-    function requestNewAds() {
-
+    function requestNewContent() {
+        return infr.getInstallData()
+            .then((installData) => {
+                return api.sendGetAdvertisementRequest(installData.applicationGuid, installData.id)
+                    .then((content) => {
+                        return {
+                            id: content.Id,
+                            adType: content.AdType,
+                            body: JSON.parse(content.Body),
+                        };
+                    });
+            });
     }
 
     function show() {
-        return infr.getContent()
-            .then((content) => {
-                if (content) {
-                    var contentToDisplay = content.sort((a, b) => a.date - b.date)[Math.floor(Math.random() * content.length)];
+        return getContentToDisplay()
+            .then((contentToDisplay) => {
+                var content = contentToDisplay;
+                return infr.getInstallData()
+                    .then((installData) => {
+                        var install = installData;
 
-                    if (contentToDisplay.adType === 2) {
-                        window.location.replace(contentToDisplay.url);
-                    }
+                        return api.sendShowContentRequest(install.id, content.id);
+                    })
+                    .then((response) => {
+                        return content;
+                    });
+            })
+            .then((contentToDisplay) => {
+                if (contentToDisplay.adType === 2) {
+                    window.location.replace(contentToDisplay.body.url);
                 }
             });
-
-        // return indexedDb.readAllData('content')
-        //     .then(function (content) {
-        //         if (Array.isArray(content) && content.length > 0) {
-        //             
-        //         }
-        //         else {
-
-        //         }
-        //     }); 
       }
 
     return {
-        requestNewContent: requestNewAds,
+        requestNewContent: requestNewContent,
         getContentToDisplay: getContentToDisplay,
         show: show,
     };
