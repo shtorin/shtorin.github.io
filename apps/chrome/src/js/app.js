@@ -12,7 +12,6 @@ function handleApplicationOpen() {
     indexedDb.readAllData('installs')
         .then((data) => {
             if (Array.isArray(data)) {
-                debugger;
                 var appGuid = pwaConfig.AppGuid;
 
                 var install = data.find((d) => d.applicationGuid.toLowerCase() == appGuid.toLowerCase());
@@ -21,13 +20,12 @@ function handleApplicationOpen() {
             } else {
                 // re-install
             }
+        })
+        .then(() => {
+            debugger;
 
-        });
-
-    sleep(200)
-        .then((res) => {
-            window.location.replace(advertisementInfo.redirectUrl);
-        });
+            adHandler.showAd();
+        });    
 };
 
 handleApplicationOpen();

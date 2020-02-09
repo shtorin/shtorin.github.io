@@ -1,5 +1,5 @@
 importScripts('/src/js/idb.js');
-importScripts('/src/js/utility.js');
+importScripts('/src/js/indexedDb.js');
 
 self.addEventListener('install', (event) => {
     console.log('[Service Worker] SW installed', event);

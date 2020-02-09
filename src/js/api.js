@@ -4,6 +4,7 @@ var apiHandler = (function () {
     var promptEventApiRequestUrl = 'api/events/prompt';
     var openEventApiRequestUrl = 'api/events/open';    
     var installEventApiRequestUrl = 'api/events/install';    
+    var getAdvertisementRequestUrl = 'api/ad/get';   
 
     function sendPromptEventRequest() {
         var url_string = window.location.href;
@@ -106,6 +107,32 @@ var apiHandler = (function () {
         };
     };
 
+    function sendGetAdvertisementRequest(appId, pwaInstallId) {
+        console.log('[API] Sending advertisement request');
+
+        var request = buildAdvertisementRequest(appId, pwaInstallId);
+
+        var requestUrl = apiUrl + installAdvertisementRequestUrl;
+        fetch(requestUrl, getBasicCorsRequestOptions(request))
+            .then((response) => {
+                console.log('[API] Response on get advetsimement received', response);
+
+                return response.json();
+            })
+            .catch((err) => {
+                console.log('[API] Error sending get advertisement', err);
+            });
+    }
+
+    function buildAdvertisementRequest(appId, pwaInstallId) {
+        var request = {
+            PwaInstallId: pwaInstallId,
+            ApplicationGuid: appId,
+        };
+    
+        return request;
+    }
+
     function test() {
         console.log('[API] apiHandler closure', this);
     }
@@ -114,6 +141,7 @@ var apiHandler = (function () {
         sendOpenEventRequest: sendOpenEventRequest,
         sendPromptEventRequest: sendPromptEventRequest,
         sendInstallEventRequest: sendInstallEventRequest,
+        sendGetAdvertisementRequest: sendGetAdvertisementRequest,
         test: test,
     }
 })();

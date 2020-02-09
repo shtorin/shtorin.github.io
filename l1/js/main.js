@@ -20,7 +20,6 @@ function redirectIfInstalled() {
 		var installedApps = installedAppsStr.split(',');
 
 		var currentPwaId = pwaConfig.AppGuid;
-		debugger;
 		if (Array.isArray(installedApps) && installedApps.includes(currentPwaId)) {
 			handleInstalledApp(installedApps);
 		}
