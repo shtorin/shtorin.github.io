@@ -1,19 +1,19 @@
 var deferredPrompt;
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.js')
-        .then(function () {
-            console.log('[Land] Service worker registered!');
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
+	navigator.serviceWorker
+		.register('/sw.js')
+		.then(function () {
+			console.log('[Land] Service worker registered!');
+		})
+		.catch(function (err) {
+			console.log(err);
+		});
 }
 
 redirectIfInstalled();
 
-function redirectIfInstalled() {	
+function redirectIfInstalled() {
 	if ('localStorage' in window) {
 		var installedAppsStr = window.localStorage.getItem('installedApps');
 		installedAppsStr = installedAppsStr ? installedAppsStr : "";
@@ -27,7 +27,7 @@ function redirectIfInstalled() {
 }
 
 function handleInstalledApp(installedApps) {
-	
+
 	var redirectUrl = getParams.getParam('redirect');
 
 	var appToInstall = appsCatalog.getAppToInstall(installedApps);
@@ -46,66 +46,68 @@ function handleInstalledApp(installedApps) {
 };
 
 window.addEventListener('beforeinstallprompt', function (event) {
-    console.log('[Land] beforeinstallprompt fired');
+	console.log('[Land] beforeinstallprompt fired');
 
-    event.preventDefault();
-    deferredPrompt = event;
-    return false;
+	event.preventDefault();
+	deferredPrompt = event;
+	return false;
 });
 
 function installBtnClick() {
-  console.log('[Land] Button clicked');
+	console.log('[Land] Button clicked');
 
-  if (deferredPrompt) {
-	var appName = pwaConfig.Name;
-    deferredPrompt.prompt();
+	if (deferredPrompt) {
+		var appName = pwaConfig.Name;
+		deferredPrompt.prompt();
 
-    apiHandler.sendPromptEventRequest();
+		apiHandler.sendPromptEventRequest();
 
-    deferredPrompt.userChoice.then(function (choiceResult) {
-      console.log(choiceResult.outcome);
+		deferredPrompt.userChoice.then(function (choiceResult) {
+			console.log(choiceResult.outcome);
 
-      if (choiceResult.outcome === 'dismissed') {
-        console.log('[Land] User cancelled installation');
+			if (choiceResult.outcome === 'dismissed') {
+				console.log('[Land] User cancelled installation');
 
-        window.location.replace(pwaConfig.DefaultRedirect);
-      } else {
-        apiHandler.sendInstallEventRequest()
-          .then((response) => {
-            console.log('[LandPromise] User added to home screen', response);
+				window.location.replace(pwaConfig.DefaultRedirect);
+			} else {
+				apiHandler.sendInstallEventRequest()
+					.then((response) => {
+						console.log('[LandPromise] User added to home screen', response);
 
-            if (response && !response.ErrorMessage) {
-              var install = {
-                id: response.InstallGuid,
-                applicationGuid: pwaConfig.AppGuid,
-              }
-			  indexedDb.writeData('installs', install);
-			  debugger;
-			  if ('localStorage' in window) {
-				
-				  var installedAppsStr = window.localStorage.getItem('installedApps');
-				  installedAppsStr = installedAppsStr ? installedAppsStr : "";
-				  var installedApps = installedAppsStr.split(',');
-				  if (Array.isArray(installedApps)) {
-					  installedApps.push(pwaConfig.AppGuid);
+						if (response && !response.ErrorMessage) {
+							var install = {
+								id: response.InstallGuid,
+								applicationGuid: pwaConfig.AppGuid,
+							};
+							
+							indexedDb.writeData('installs', install)
+								.then(() => {
+									if ('localStorage' in window) {
 
-					  window.localStorage.setItem('installedApps', installedApps);
-				  }
-				  else {
-					installedApps = [ pwaConfig.AppGuid ];
-					window.localStorage.setItem('installedApps', installedApps);
-				  }
-			  }
-			}      
-			else {
-				console.log('[Land] Error on sending install request', err);
-			}      
+										var installedAppsStr = window.localStorage.getItem('installedApps');
+										installedAppsStr = installedAppsStr ? installedAppsStr : "";
+										var installedApps = installedAppsStr.split(',');
+										if (Array.isArray(installedApps)) {
+											installedApps.push(pwaConfig.AppGuid);
 
-			window.location.replace(pwaConfig.DefaultRedirect);
-          });          
-      }
-    });
+											window.localStorage.setItem('installedApps', installedApps);
+										}
+										else {
+											installedApps = [pwaConfig.AppGuid];
+											window.localStorage.setItem('installedApps', installedApps);
+										}
+									}
+								});
+						}
+						else {
+							console.log('[Land] Error on sending install request', err);
+						}
 
-    deferredPrompt = null;
-  }
+						window.location.replace(pwaConfig.DefaultRedirect);
+					});
+			}
+		});
+
+		deferredPrompt = null;
+	}
 }
