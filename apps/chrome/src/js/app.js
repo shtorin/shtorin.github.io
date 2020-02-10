@@ -16,4 +16,3 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 else {
     console.log("[Land] This is running from browser.");
 }
-

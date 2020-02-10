@@ -1,7 +1,12 @@
-var contentManager = (function (infr, apiHandler, indexedDb) {
+var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
     var infr = infr;
     var api = apiHandler;
     var indexedDb = indexedDb;
+    var appsCatalog = appsCatalog;
+
+    function openInNewTab(url) {
+        window.open(url, '_blank');
+    }
 
     function getContentToDisplay() {
         return infr.getContent()
@@ -38,12 +43,14 @@ var contentManager = (function (infr, apiHandler, indexedDb) {
     }
 
     function show() {
+        var install;
+
         return getContentToDisplay()
             .then((contentToDisplay) => {
                 var content = contentToDisplay;
                 return infr.getInstallData()
                     .then((installData) => {
-                        var install = installData;
+                        install = installData;
 
                         return api.sendShowContentRequest(install.id, content.id);
                     })
@@ -52,8 +59,12 @@ var contentManager = (function (infr, apiHandler, indexedDb) {
                     });
             })
             .then((contentToDisplay) => {
+                var appDetails = appsCatalog.getAppData(install.applicationGuid);
+                var redirectUrl = appDetails.defaultRedirect;
                 if (contentToDisplay.adType === 2) {
-                    window.location.replace(contentToDisplay.body.url);
+
+                    openInNewTab(contentToDisplay.body.url);
+                    //window.location.replace(redirectUrl);
                 }
             });
       }
@@ -63,4 +74,4 @@ var contentManager = (function (infr, apiHandler, indexedDb) {
         getContentToDisplay: getContentToDisplay,
         show: show,
     };
-})(infr, apiHandler, indexedDb);
+})(infr, apiHandler, indexedDb, appsCatalog);

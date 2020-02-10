@@ -31,7 +31,6 @@ function handleInstalledApp(installedApps) {
 	var redirectUrl = getParams.getParam('redirect');
 
 	var appToInstall = appsCatalog.getAppToInstall(installedApps);
-	debugger;
 	if (appToInstall) {
 		var appUrl = appToInstall.path;
 
@@ -56,58 +55,68 @@ window.addEventListener('beforeinstallprompt', function (event) {
 function installBtnClick() {
 	console.log('[Land] Button clicked');
 
+	var userChoice;
 	if (deferredPrompt) {
 		var appName = pwaConfig.Name;
-		deferredPrompt.prompt();
+		deferredPrompt.prompt()
+			.then((promptResult) => {
+				userChoice = promptResult;
 
-		apiHandler.sendPromptEventRequest();
+				return apiHandler.sendPromptEventRequest();
+			})
+			.then((promptEventResponse) => {
+				return userChoice;
+			})
+			.then(function (choiceResult) {
+				console.log('[Land] user choice:', choiceResult.outcome);
 
-		deferredPrompt.userChoice.then(function (choiceResult) {
-			console.log(choiceResult.outcome);
+				if (choiceResult.outcome === 'dismissed') {
+					console.log('[Land] User cancelled installation');
 
-			if (choiceResult.outcome === 'dismissed') {
-				console.log('[Land] User cancelled installation');
+					window.location.replace(pwaConfig.DefaultRedirect);
+				} else {
+					return apiHandler.sendInstallEventRequest();
+				}
+			})
+			.then((sendEventResponse) => {
+				console.log('[LandPromise] User added to home screen', sendEventResponse);
+
+				if (sendEventResponse && !sendEventResponse.ErrorMessage) {
+					var install = {
+						id: sendEventResponse.InstallGuid,
+						applicationGuid: pwaConfig.AppGuid,
+					};
+
+					return indexedDb.writeData('installs', install);
+				}
+				else {
+					console.log('[Land] Error on sending install request', err);
+				}				
+			})
+			.then(() => {
+				if ('localStorage' in window) {
+
+					var installedAppsStr = window.localStorage.getItem('installedApps');
+					installedAppsStr = installedAppsStr ? installedAppsStr : "";
+					var installedApps = installedAppsStr.split(',');
+					if (Array.isArray(installedApps)) {
+						installedApps.push(pwaConfig.AppGuid);
+
+						window.localStorage.setItem('installedApps', installedApps);
+					}
+					else {
+						installedApps = [pwaConfig.AppGuid];
+						window.localStorage.setItem('installedApps', installedApps);
+					}
+				}
+
+				deferredPrompt = null;
 
 				window.location.replace(pwaConfig.DefaultRedirect);
-			} else {
-				apiHandler.sendInstallEventRequest()
-					.then((response) => {
-						console.log('[LandPromise] User added to home screen', response);
+			})
+			.catch((error) => {
+				console.log('[Land] Error on handling install event', error);
+			});
 
-						if (response && !response.ErrorMessage) {
-							var install = {
-								id: response.InstallGuid,
-								applicationGuid: pwaConfig.AppGuid,
-							};
-							
-							indexedDb.writeData('installs', install)
-								.then(() => {
-									if ('localStorage' in window) {
-
-										var installedAppsStr = window.localStorage.getItem('installedApps');
-										installedAppsStr = installedAppsStr ? installedAppsStr : "";
-										var installedApps = installedAppsStr.split(',');
-										if (Array.isArray(installedApps)) {
-											installedApps.push(pwaConfig.AppGuid);
-
-											window.localStorage.setItem('installedApps', installedApps);
-										}
-										else {
-											installedApps = [pwaConfig.AppGuid];
-											window.localStorage.setItem('installedApps', installedApps);
-										}
-									}
-								});
-						}
-						else {
-							console.log('[Land] Error on sending install request', err);
-						}
-
-						window.location.replace(pwaConfig.DefaultRedirect);
-					});
-			}
-		});
-
-		deferredPrompt = null;
 	}
 }
