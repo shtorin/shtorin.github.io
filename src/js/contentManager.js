@@ -70,8 +70,10 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
             .then((contentToDisplay) => {
                 console.log('[Content Manager] Starting to display content', contentToDisplay);
                 
+                var appData = appsCatalog.getAppData(install.applicationGuid);
                 if (contentToDisplay.adType === 2) {
-                    window.location.replace(contentToDisplay.body.url);
+                    window.location.replace(appData.defaultRedirect);
+                    openInNewTab(contentToDisplay.body.url);
                 }
             })
             .catch((error) => {
