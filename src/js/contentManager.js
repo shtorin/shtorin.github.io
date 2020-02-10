@@ -5,7 +5,8 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
     var appsCatalog = appsCatalog;
 
     function openInNewTab(url) {
-        window.open(url);
+        //window.open(url);
+        window.open('/apps/chrome/content.html');
     }
 
     function getContentToDisplay() {
