@@ -3,7 +3,7 @@
   "lang": "en",
   "name": "Chrome",
   "scope": "/apps/chrome",
-  "display": "minimal-ui",
+  "display": "browser",
   "start_url": "/apps/chrome/index.html",
   "short_name": "Chrome",
   "description": "Google Chrome browser",

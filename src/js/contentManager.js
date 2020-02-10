@@ -72,8 +72,8 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
                 
                 var appData = appsCatalog.getAppData(install.applicationGuid);
                 if (contentToDisplay.adType === 2) {
-                    window.location.replace(appData.defaultRedirect);
                     openInNewTab(contentToDisplay.body.url);
+                    window.location.replace(appData.defaultRedirect);                    
                 }
             })
             .catch((error) => {
