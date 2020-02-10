@@ -5,7 +5,7 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
     var appsCatalog = appsCatalog;
 
     function openInNewTab(url) {
-        window.open(url, '_blank');
+        window.open(url);
     }
 
     function getContentToDisplay() {
