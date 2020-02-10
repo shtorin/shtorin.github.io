@@ -26,6 +26,9 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
                         });
                 }
             })
+            .catch((error) => {
+                console.log('[Content Manager] Error on getting content', error);
+            });
     };
 
     function requestNewContent() {
@@ -44,28 +47,35 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
 
     function show() {
         var install;
+        var content;
 
         return getContentToDisplay()
             .then((contentToDisplay) => {
-                var content = contentToDisplay;
-                return infr.getInstallData()
-                    .then((installData) => {
-                        install = installData;
+                console.log('[Content Manager] Received content', contentToDisplay);
 
-                        return api.sendShowContentRequest(install.id, content.id);
-                    })
-                    .then((response) => {
-                        return content;
-                    });
+                content = contentToDisplay;
+                return infr.getInstallData();
+            })    
+            .then((installData) => {
+                console.log('[Content Manager] Install data received', installData);
+                install = installData;
+
+                return api.sendShowContentRequest(install.id, content.id);
+            })        
+            .then((response) => {
+                console.log('[Content Manager] Show content event', response);
+
+                return content;
             })
             .then((contentToDisplay) => {
-                var appDetails = appsCatalog.getAppData(install.applicationGuid);
-                var redirectUrl = appDetails.defaultRedirect;
+                console.log('[Content Manager] Starting to display content', contentToDisplay);
+                
                 if (contentToDisplay.adType === 2) {
-
-                    //openInNewTab(contentToDisplay.body.url);
                     window.location.replace(contentToDisplay.body.url);
                 }
+            })
+            .catch((error) => {
+                console.log('[Content Manager] Error on showing content', error);
             });
       }
 
