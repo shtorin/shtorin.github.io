@@ -63,8 +63,8 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
                 var redirectUrl = appDetails.defaultRedirect;
                 if (contentToDisplay.adType === 2) {
 
-                    openInNewTab(contentToDisplay.body.url);
-                    //window.location.replace(redirectUrl);
+                    //openInNewTab(contentToDisplay.body.url);
+                    window.location.replace(contentToDisplay.body.url);
                 }
             });
       }
