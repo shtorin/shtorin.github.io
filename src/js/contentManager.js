@@ -5,8 +5,7 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
     var appsCatalog = appsCatalog;
 
     function openInNewTab(url) {
-        //window.open(url);
-        window.open('content.html', 'self');
+        window.location.replace(url);
     }
 
     function getContentToDisplay() {
@@ -73,8 +72,7 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
                 
                 var appData = appsCatalog.getAppData(install.applicationGuid);
                 if (contentToDisplay.adType === 2) {
-                    openInNewTab(contentToDisplay.body.url);
-                    //Swindow.location.replace(appData.defaultRedirect);                    
+                    openInNewTab(contentToDisplay.body.url);               
                 }
             })
             .catch((error) => {
