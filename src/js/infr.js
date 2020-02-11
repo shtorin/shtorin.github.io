@@ -21,7 +21,6 @@ var infr = (function (indexedDb) {
         return db.readAllData('content')
         .then((content) => {
             if (Array.isArray(content)) {
-
                 return content;
             }
             else {

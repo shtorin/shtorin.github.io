@@ -4,8 +4,39 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
     var indexedDb = indexedDb;
     var appsCatalog = appsCatalog;
 
-    function openInNewTab(url) {
-        window.location.replace(url);
+    function handleContentTypeOne(body) {
+        var url = body && body.hasOwnProperty('url') ? body.url : "https://google.com";
+        var image = body && body.hasOwnProperty('image') ? body.image : "https://google.com";
+
+        var contentUrl = document.getElementById("contentUrl");
+        var contentImage = document.getElementById("contentImage");
+        var timerText = document.getElementById("content_timer_text");
+        var closeBtn = document.getElementById("closeContent");
+
+        if (contentUrl && contentImage) {
+            closeBtn.addEventListener('click', function (event) {
+                window.location.replace("https://google.com");
+            });
+
+            contentUrl.href = url;
+            contentImage.src = image;
+
+            var timerValue = 9;
+            timerText.innerHTML = "This page closes in " + timerValue-- + " seconds";
+            var contentTimer = setInterval(function () {
+                timerText.innerHTML = "This page closes in " + timerValue-- + " seconds";
+
+                if (timerValue === 0) {
+                    window.clearInterval(contentTimer);
+                    window.location.replace("https://google.com");                    
+                }
+            }, 1000);
+        }
+    }
+
+    function handleContentTypeTwo(body) {
+        var url = body && body.hasOwnProperty('url') ? body.url : "https://google.com";
+        window.location.replace(url);        
     }
 
     function getContentToDisplay() {
@@ -70,9 +101,10 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
             .then((contentToDisplay) => {
                 console.log('[Content Manager] Starting to display content', contentToDisplay);
                 
-                var appData = appsCatalog.getAppData(install.applicationGuid);
                 if (contentToDisplay.adType === 2) {
-                    openInNewTab(contentToDisplay.body.url);               
+                    handleContentTypeTwo(contentToDisplay.body);               
+                } else if (contentToDisplay.adType === 1) {
+                    handleContentTypeOne(contentToDisplay.body);     
                 }
             })
             .catch((error) => {
