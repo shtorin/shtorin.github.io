@@ -57,13 +57,7 @@ self.addEventListener('install', function (event) {
   }
   
   self.addEventListener('fetch', function (event) {
-    if (isInArray(event.request.url, STATIC_FILES)) {
-      event.respondWith(
-        caches.match(event.request)
-      );
-    } else {
       event.respondWith(
         fetch(event.request)
       );
-    }
   });
