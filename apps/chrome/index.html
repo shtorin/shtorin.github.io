@@ -12,21 +12,23 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css">
   <link rel="manifest" href="/apps/chrome/installmanifest.json">
 
-  <link href="/apps/src/css/modal.css" rel="stylesheet" type="text/css" />
+  <link href="/apps/src/css/app.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+
   <div id="app">
-    <main class="mdl-layout__content mat-typography">
-      <div class="page-content">
-        <a id="contentUrl" href="https://google.com" target="_blank">
-          <img id="contentImage" src="" class="main-image">
-        </a>
-        <div id="closeContent" style="position: absolute; top: 8px; right: 16px;">[x] Close</div>
-        <h5 class="text-center mdl-color-text--primary" id="content_timer_text"></h5>
-      </div>
-    </main>
+    <div id="background">
+      <a href="#">
+        <img id="closeContent" class="close" src="http://cdn3.iconfinder.com/data/icons/iconic-1/32/x_alt-128.png" alt="X" />
+      </a>
+      <a id="contentUrl" href="https://google.com" target="_blank">
+      <img id="contentImage" src="" class="stretch" alt="" />      
+    </a>
+    <p id="content_timer_text"></p>
+    </div>    
   </div>
+  
 
   <script src="/apps/chrome/src/js/pwaConfig.js"></script>
   <script src="/src/js/getParams.js"></script>
