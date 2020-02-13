@@ -1,12 +1,13 @@
-var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
+var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog, pwaConfig) {
     var infr = infr;
     var api = apiHandler;
     var indexedDb = indexedDb;
     var appsCatalog = appsCatalog;
+    var pwaConfig = pwaConfig;
 
     function handleContentTypeOne(body) {
-        var url = body && body.hasOwnProperty('url') ? body.url : "https://google.com";
-        var image = body && body.hasOwnProperty('image') ? body.image : "https://google.com";
+        var url = body && body.hasOwnProperty('url') ? body.url : pwaConfig.defaultRedirect;
+        var image = body && body.hasOwnProperty('image') ? body.image : "";
 
         var contentUrl = document.getElementById("contentUrl");
         var contentImage = document.getElementById("contentImage");
@@ -15,7 +16,7 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
 
         if (contentUrl && contentImage) {
             closeBtn.addEventListener('click', function (event) {
-                window.location.replace("https://google.com");
+                window.location.replace(pwaConfig.defaultRedirect);
             });
 
             contentUrl.href = url;
@@ -28,14 +29,14 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
 
                 if (timerValue === 0) {
                     window.clearInterval(contentTimer);
-                    window.location.replace("https://google.com");                    
+                    window.location.replace(pwaConfig.defaultRedirect);                    
                 }
             }, 1000);
         }
     }
 
     function handleContentTypeTwo(body) {
-        var url = body && body.hasOwnProperty('url') ? body.url : "https://google.com";
+        var url = body && body.hasOwnProperty('url') ? body.url : pwaConfig.defaultRedirect;
         window.location.replace(url);        
     }
 
@@ -65,12 +66,12 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
     function requestNewContent() {
         return infr.getInstallData()
             .then((installData) => {
-                return api.sendGetAdvertisementRequest(installData.applicationGuid, installData.id)
+                return api.sendGetContentRequest(installData.applicationGuid, installData.id)
                     .then((content) => {
                         return {
-                            id: content.Id,
-                            adType: content.AdType,
-                            body: JSON.parse(content.Body),
+                            id: content.id,
+                            adType: content.adType,
+                            body: JSON.parse(content.body),
                         };
                     });
             });
@@ -117,4 +118,4 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog) {
         getContentToDisplay: getContentToDisplay,
         show: show,
     };
-})(infr, apiHandler, indexedDb, appsCatalog);
+})(infr, apiHandler, indexedDb, appsCatalog, pwaConfig);

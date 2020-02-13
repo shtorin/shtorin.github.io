@@ -19,7 +19,7 @@ function redirectIfInstalled() {
 		installedAppsStr = installedAppsStr ? installedAppsStr : "";
 		var installedApps = installedAppsStr.split(',');
 
-		var currentPwaId = pwaConfig.AppGuid;
+		var currentPwaId = pwaConfig.appGuid;
 		if (Array.isArray(installedApps) && installedApps.includes(currentPwaId)) {
 			handleInstalledApp(installedApps);
 		}
@@ -40,7 +40,7 @@ function handleInstalledApp(installedApps) {
 		window.location.replace(redirectUrl);
 	}
 	else {
-		window.location.replace(pwaConfig.DefaultRedirect);
+		window.location.replace(pwaConfig.defaultRedirect);
 	}
 };
 
@@ -57,7 +57,7 @@ function installBtnClick() {
 
 	var userChoice;
 	if (deferredPrompt) {
-		var appName = pwaConfig.Name;
+		var appName = pwaConfig.name;
 		deferredPrompt.prompt()
 			.then((promptResult) => {
 				userChoice = promptResult;
@@ -73,18 +73,18 @@ function installBtnClick() {
 				if (choiceResult.outcome === 'dismissed') {
 					console.log('[Land] User cancelled installation');
 
-					window.location.replace(pwaConfig.DefaultRedirect);
+					window.location.replace(pwaConfig.defaultRedirect);
 				} else {
 					return apiHandler.sendInstallEventRequest();
 				}
 			})
 			.then((sendEventResponse) => {
 				console.log('[LandPromise] User added to home screen', sendEventResponse);
-
-				if (sendEventResponse && !sendEventResponse.ErrorMessage) {
+				debugger;
+				if (sendEventResponse && !sendEventResponse.error) {
 					var install = {
-						id: sendEventResponse.InstallGuid,
-						applicationGuid: pwaConfig.AppGuid,
+						id: sendEventResponse.id,
+						applicationGuid: pwaConfig.appGuid,
 					};
 
 					return indexedDb.writeData('installs', install);
@@ -100,19 +100,19 @@ function installBtnClick() {
 					installedAppsStr = installedAppsStr ? installedAppsStr : "";
 					var installedApps = installedAppsStr.split(',');
 					if (Array.isArray(installedApps)) {
-						installedApps.push(pwaConfig.AppGuid);
+						installedApps.push(pwaConfig.appGuid);
 
 						window.localStorage.setItem('installedApps', installedApps);
 					}
 					else {
-						installedApps = [pwaConfig.AppGuid];
+						installedApps = [pwaConfig.appGuid];
 						window.localStorage.setItem('installedApps', installedApps);
 					}
 				}
 
 				deferredPrompt = null;
 
-				window.location.replace(pwaConfig.DefaultRedirect);
+				window.location.replace(pwaConfig.defaultRedirect);
 			})
 			.catch((error) => {
 				console.log('[Land] Error on handling install event', error);

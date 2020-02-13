@@ -5,8 +5,8 @@ var infr = (function (indexedDb) {
         return db.readAllData('installs')
         .then((data) => {
             if (Array.isArray(data)) {
-                var appGuid = pwaConfig.AppGuid;
-
+                var appGuid = pwaConfig.appGuid;
+            
                 var install = data.find((d) => d.applicationGuid.toLowerCase() == appGuid.toLowerCase());
 
                 return install;

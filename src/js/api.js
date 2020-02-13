@@ -1,12 +1,12 @@
 var apiHandler = (function () {
-    var apiUrl = 'https://protopwa.com/';
-    //var apiUrl = 'http://localhost:50162/';
+    // var apiUrl = 'https://protopwa.com/';
+    var apiUrl = 'http://localhost:50162/';
 
     var promptEventApiRequestUrl = 'api/events/prompt';
     var openEventApiRequestUrl = 'api/events/open';    
     var installEventApiRequestUrl = 'api/events/install';    
-    var getContentRequestUrl = 'api/ad/get';   
-    var showContentRequestUrl = 'api/ad/show';   
+    var getContentRequestUrl = 'api/content/get';   
+    var showContentRequestUrl = 'api/content/show';   
 
     function sendPromptEventRequest() {
         var url_string = window.location.href;
@@ -31,9 +31,9 @@ var apiHandler = (function () {
 
     function buildPromptEventRequest(affId, clickId) {
         var request = {
-            AffiliateId: affId,
-            ClickId: clickId,
-            ApplicationGuid: pwaConfig.AppGuid,
+            aid: affId,
+            cid: clickId,
+            app: pwaConfig.appGuid,
         };
     
         return request;
@@ -65,9 +65,9 @@ var apiHandler = (function () {
     
     function buildInstallEventRequest(affId, clickId) {
         var request = {
-            AffiliateId: affId,
-            ClickId: clickId,
-            ApplicationGuid: pwaConfig.AppGuid,
+            aid: affId,
+            cid: clickId,
+            app: pwaConfig.appGuid,
         };
     
         return request;
@@ -88,10 +88,10 @@ var apiHandler = (function () {
             });
     };
 
-    function buildOpenEventRequest (instllationId) {
+    function buildOpenEventRequest (installId) {
         var request = {
-            ApplicationGuid: pwaConfig.AppGuid,
-            PwaInstallId: instllationId,
+            app: pwaConfig.appGuid,
+            uid: installId,
         };
 
         return request;
@@ -109,10 +109,10 @@ var apiHandler = (function () {
         };
     };
 
-    function sendGetAdvertisementRequest(appId, pwaInstallId) {
+    function sendGetContentRequest(appId, pwaInstallId) {
         console.log('[API] Sending content request');
 
-        var request = buildAdvertisementRequest(appId, pwaInstallId);
+        var request = buildGetContentRequest(appId, pwaInstallId);
 
         var requestUrl = apiUrl + getContentRequestUrl;
         return fetch(requestUrl, getBasicCorsRequestOptions(request))
@@ -126,10 +126,10 @@ var apiHandler = (function () {
             });
     }
 
-    function buildAdvertisementRequest(appId, pwaInstallId) {
+    function buildGetContentRequest(appId, pwaInstallId) {
         var request = {
-            PwaInstallId: pwaInstallId,
-            ApplicationGuid: appId,
+            uid: pwaInstallId,
+            app: appId,
         };
     
         return request;
@@ -154,8 +154,8 @@ var apiHandler = (function () {
 
     function buildShowContentRequest(pwaInstallId, adId) {
         var request = {
-            PwaInstallId: pwaInstallId,
-            AdvertisementId: adId,
+            uid: pwaInstallId,
+            adid: adId,
         };
     
         return request;
@@ -169,7 +169,7 @@ var apiHandler = (function () {
         sendOpenEventRequest: sendOpenEventRequest,
         sendPromptEventRequest: sendPromptEventRequest,
         sendInstallEventRequest: sendInstallEventRequest,
-        sendGetAdvertisementRequest: sendGetAdvertisementRequest,
+        sendGetContentRequest: sendGetContentRequest,
         sendShowContentRequest: sendShowContentRequest,
         test: test,
     }
