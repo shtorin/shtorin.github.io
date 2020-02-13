@@ -1,6 +1,6 @@
 var apiHandler = (function () {
-    // var apiUrl = 'https://protopwa.com/';
-    var apiUrl = 'http://localhost:50162/';
+    var apiUrl = 'https://protopwa.com/';
+    // var apiUrl = 'http://localhost:50162/';
 
     var promptEventApiRequestUrl = 'api/events/prompt';
     var openEventApiRequestUrl = 'api/events/open';    

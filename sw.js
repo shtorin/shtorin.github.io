@@ -6,10 +6,9 @@ var CACHE_DYNAMIC_NAME = 'dynamic-v1';
 var STATIC_FILES = [
     '/',
     '/apps/chrome/index.html',
-    '/src/js/app.js',
     '/src/js/contentManager.js',
     '/src/js/idb.js',
-    '/src/js/infr',
+    '/src/js/infr.js',
     '/src/js/getParams.js',
     '/src/js/indexedDb.js',
     '/src/js/material.min.js',
