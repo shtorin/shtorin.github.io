@@ -80,7 +80,6 @@ function installBtnClick() {
 			})
 			.then((sendEventResponse) => {
 				console.log('[LandPromise] User added to home screen', sendEventResponse);
-				debugger;
 				if (sendEventResponse && !sendEventResponse.error) {
 					var install = {
 						id: sendEventResponse.id,

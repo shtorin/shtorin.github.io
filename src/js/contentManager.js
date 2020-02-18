@@ -6,33 +6,34 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog, pwaCon
     var pwaConfig = pwaConfig;
 
     function handleContentTypeOne(body) {
+        var bannerContainer = $('#bannerContainer');
+        var banner = bannerContainer.find('.banner');
+        var bannerImage = banner.find('img');
+        var timer = bannerContainer.find('.timer').find('span');
+        var closeButton = bannerContainer.find('.banner-close');
+    
+        var screenWidth = window.innerWidth ? window.innerWidth : $(window).width();
+        var	screenHeight = window.innerHeight ? window.innerHeight : $(window).height();
+    
         var url = body && body.hasOwnProperty('url') ? body.url : pwaConfig.defaultRedirect;
-        var image = body && body.hasOwnProperty('image') ? body.image : "";
-
-        var contentUrl = document.getElementById("contentUrl");
-        var contentImage = document.getElementById("contentImage");
-        var timerText = document.getElementById("content_timer_text");
-        var closeBtn = document.getElementById("closeContent");
-
-        if (contentUrl && contentImage) {
-            closeBtn.addEventListener('click', function (event) {
+        var image = body && body.hasOwnProperty('image') ? body.image  + "?screenWidth=" + screenWidth + "&screenHeight=" + screenHeight : "";
+        banner.attr('href', url);
+        bannerImage.attr('src', image);    
+    
+        closeButton.on('click', function() {
+            window.location.replace(pwaConfig.defaultRedirect);
+        });
+    
+        var time = 10;    
+        setInterval(function() {
+            time--;
+    
+            if (time >= 0) {
+                timer.text(time);
+            } else {
                 window.location.replace(pwaConfig.defaultRedirect);
-            });
-
-            contentUrl.href = url;
-            contentImage.src = image;
-
-            var timerValue = 9;
-            timerText.innerHTML = "This page closes in " + timerValue-- + " seconds";
-            var contentTimer = setInterval(function () {
-                timerText.innerHTML = "This page closes in " + timerValue-- + " seconds";
-
-                if (timerValue === 0) {
-                    window.clearInterval(contentTimer);
-                    window.location.replace(pwaConfig.defaultRedirect);                    
-                }
-            }, 1000);
-        }
+            }
+        }, 1000);
     }
 
     function handleContentTypeTwo(body) {

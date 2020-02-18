@@ -1,11 +1,14 @@
 importScripts('/src/js/idb.js');
 importScripts('/src/js/indexedDb.js');
 
-var CACHE_STATIC_NAME = 'static-v2';
+var CACHE_STATIC_NAME = 'static-v3';
 var CACHE_DYNAMIC_NAME = 'dynamic-v1';
 var STATIC_FILES = [
     '/',
     '/apps/chrome/index.html',
+    '/apps/instagram/index.html',
+
+    '/src/js/jquery.min.js',
     '/src/js/contentManager.js',
     '/src/js/idb.js',
     '/src/js/infr.js',
