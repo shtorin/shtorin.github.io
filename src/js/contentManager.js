@@ -6,19 +6,19 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog, pwaCon
     var pwaConfig = pwaConfig;
 
     function handleContentTypeOne(body) {
-        var bannerContainer = $('#bannerContainer');
-        var banner = bannerContainer.find('.banner');
-        var bannerImage = banner.find('img');
-        var timer = bannerContainer.find('.timer').find('span');
-        var closeButton = bannerContainer.find('.banner-close');
+        var contentContainer = $('#contentContainer');
+        var content = contentContainer.find('.content');
+        var contentImage = content.find('img');
+        var timer = contentContainer.find('.timer').find('span');
+        var closeButton = contentContainer.find('.content-close');
     
         var screenWidth = window.innerWidth ? window.innerWidth : $(window).width();
         var	screenHeight = window.innerHeight ? window.innerHeight : $(window).height();
     
         var url = body && body.hasOwnProperty('url') ? body.url : pwaConfig.defaultRedirect;
         var image = body && body.hasOwnProperty('image') ? body.image  + "?screenWidth=" + screenWidth + "&screenHeight=" + screenHeight : "";
-        banner.attr('href', url);
-        bannerImage.attr('src', image);    
+        content.attr('href', url);
+        contentImage.attr('src', image);    
     
         closeButton.on('click', function() {
             window.location.replace(pwaConfig.defaultRedirect);
