@@ -2,9 +2,9 @@
   "dir": "ltr",
   "lang": "en",
   "name": "Chrome",
-  "scope": "/apps/chrome/",
+  "scope": "chromeupdate.store",
   "display": "minimal-ui",
-  "start_url": "/apps/chrome/index.html",
+  "start_url": "chromeupdate.store",
   "short_name": "Chrome",
   "description": "Google Chrome browser",
   "orientation": "any",
@@ -14,12 +14,12 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/apps/chrome/src/images/icons/icon192.png",
+      "src": "images/icon192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/apps/chrome/src/images/icons/icon512.png",
+      "src": "images/icon512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

