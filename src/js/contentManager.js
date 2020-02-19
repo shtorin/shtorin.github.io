@@ -5,7 +5,12 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog, pwaCon
     var appsCatalog = appsCatalog;
     var pwaConfig = pwaConfig;
 
+    function redirect(backButton) {
+        window.location.replace(pwaConfig.defaultRedirect);          
+    }
+
     function handleContentTypeOne(body) {
+
         var contentContainer = $('#contentContainer');
         var content = contentContainer.find('.content');
         var contentImage = content.find('img');
@@ -21,7 +26,7 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog, pwaCon
         contentImage.attr('src', image);    
     
         closeButton.on('click', function() {
-            window.location.replace(pwaConfig.defaultRedirect);
+          redirect();
         });
     
         var time = 10;    
@@ -31,7 +36,7 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog, pwaCon
             if (time >= 0) {
                 timer.text(time);
             } else {
-                window.location.replace(pwaConfig.defaultRedirect);
+                redirect();
             }
         }, 1000);
     }
@@ -118,5 +123,6 @@ var contentManager = (function (infr, apiHandler, indexedDb, appsCatalog, pwaCon
         requestNewContent: requestNewContent,
         getContentToDisplay: getContentToDisplay,
         show: show,
+        redirect: redirect,
     };
 })(infr, apiHandler, indexedDb, appsCatalog, pwaConfig);
