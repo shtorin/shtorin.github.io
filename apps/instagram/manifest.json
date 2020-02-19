@@ -8,8 +8,8 @@
   "short_name": "Instagram",
   "description": "Instagram",
   "orientation": "any",
-  "background_color": "#fafafa",
-  "theme_color": "#fafafa",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "related_applications": [],
   "prefer_related_applications": false,
   "icons": [
