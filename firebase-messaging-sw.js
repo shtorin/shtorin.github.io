@@ -1,7 +1,6 @@
 'use strict';
 
 self.addEventListener('push', function (event) {
-    debugger;
     var push = JSON.parse(event.data.text());
 
     var title = push.data.title;
